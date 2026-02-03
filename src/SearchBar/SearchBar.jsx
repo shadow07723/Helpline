@@ -39,6 +39,7 @@ function SearchBar({
     { name: "about", path: "/about" },
     { name: "upi", path: "/upi" },
     { name: "doctoron", path: "/doctoron" },
+    { name: "privacy", path: "/privacy" }, // 4th option example
      // 6th option example
   ];
 

@@ -12,6 +12,7 @@ const Serviceopt = () => {
   const [activeSearchBar, setActiveSearchBar] = useState(null);
 
   const dotRef = useRef(null);
+  const cardRefs = useRef([]); // 🔹 Add ref array for cards
 
   const serviceOptions = {
     aadhaar: [
@@ -122,6 +123,19 @@ const Serviceopt = () => {
     }
   }, [location.state]);
 
+  // 🔹 Scroll selected card into view
+  useEffect(() => {
+    if (activeService) {
+      const index = cards.findIndex((c) => c.id === activeService);
+      if (index >= 0 && cardRefs.current[index]) {
+        cardRefs.current[index].scrollIntoView({
+          behavior: "smooth",
+          block: "center", // center in screen
+        });
+      }
+    }
+  }, [activeService]);
+
   const toggleDropdown = () => {
     if (!openMenu && dotRef.current) {
       const rect = dotRef.current.getBoundingClientRect();
@@ -132,7 +146,6 @@ const Serviceopt = () => {
 
   return (
     <div className="bg-black text-white w-full overflow-hidden">
-
       {/* 🔹 TOP BAR */}
       <div className="flex items-center bg-gray-900 p-2">
         {/* ☰ THREE LINES */}
@@ -146,23 +159,22 @@ const Serviceopt = () => {
 
         {/* 🔹 SCROLLABLE CARDS */}
         <div className="flex gap-3 ml-2 overflow-x-auto scrollbar-hide w-full">
-          {cards.map((card) => (
+          {cards.map((card, i) => (
             <div
               key={card.id}
+              ref={(el) => (cardRefs.current[i] = el)} // 🔹 Add ref
               onClick={() => {
                 setActiveService(card.id);
                 setOpenMenu(false);
               }}
               className={`flex-shrink-0 px-4 py-2 rounded cursor-pointer  ${
-                activeService === card.id
-                  ? "bg-blue-600"
-                  : "bg-gray-700"
+                activeService === card.id ? "bg-blue-600" : "bg-gray-700"
               }`}
             >
               <Link to={card.link}>{card.title}</Link>
             </div>
           ))}
-        </div>       
+        </div>
       </div>
 
       {/* 🔹 DROPDOWN */}

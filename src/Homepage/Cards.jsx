@@ -1,35 +1,31 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Cards = () => {
-  // 10 cards ka array
   const cardData = [
-    { id: 1, title: "Card 1", desc: "This is card one" },
-    { id: 2, title: "Card 2", desc: "This is card two" },
-    { id: 3, title: "Card 3", desc: "This is card three" },
-    { id: 4, title: "Card 4", desc: "This is card four" },
-    { id: 5, title: "Card 5", desc: "This is card five" },
-    { id: 6, title: "Card 6", desc: "This is card six" },
-    { id: 7, title: "Card 7", desc: "This is card seven" },
-    { id: 8, title: "Card 8", desc: "This is card eight" },
-    { id: 9, title: "Card 9", desc: "This is card nine" },
-    { id: 10, title: "Card 10", desc: "This is card ten" },
+    { id: 1, image: "Homeposter1.png", path: "/upi", service: "upi" },
+    { id: 2, image: "Homeposter1.png", path: "/pan", service: "pan" },
+    { id: 3, image: "Homeposter1.png", path: "/aadhaar", service: "aadhaar" },
+    { id: 4, image: "Homeposter1.png", path: "/account", service: "account" },
+    { id: 5, image: "Homeposter1.png", path: "/aayush", service: "aayush" },
+    { id: 6, image: "Homeposter1.png", path: "/privacy", service: "privacy" },
   ];
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "20px", padding: "20px" }}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6 ">
       {cardData.map((card) => (
-        <div
+        <Link
           key={card.id}
-          style={{
-            border: "1px solid #ccc",
-            padding: "15px",
-            borderRadius: "8px",
-            boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
-          }}
+          to={card.path}
+          state={{ service: card.service }}
+          className="group block rounded-xl overflow-hidden shadow-md hover:shadow-2xl transform transition duration-300 hover:scale-105"
         >
-          <h3>{card.title}</h3>
-          <p>{card.desc}</p>
-        </div>
+          <img
+            src={card.image}
+            alt={card.service}
+            className="w-full h-56 object-fill group-hover:brightness-110"
+          />
+        </Link>
       ))}
     </div>
   );

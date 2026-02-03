@@ -146,7 +146,6 @@ export default function AadhaarServices() {
 
       {/* FOOTER */}
       <Footer />
-      
     </div>
   );
 }
