@@ -1,7 +1,7 @@
 import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 
-function Top1({ activeSearchBar, setActiveSearchBar }) {
+function Top({ activeSearchBar, setActiveSearchBar }) {
   return (
     <div className="h-60 w-full bg-amber-100 flex justify-center  items-center ">
       <SearchBar
@@ -18,4 +18,4 @@ function Top1({ activeSearchBar, setActiveSearchBar }) {
   );
 }
 
-export default Top1;
+export default Top;

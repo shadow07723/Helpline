@@ -3,9 +3,9 @@ import { useState } from "react";
 
 import Header from "./Header/Header";
 import Serviceopt from "./Header/Serviceopt";
-import Top from "./Homepage.jsx/top1";
+import Top from "./Homepage/Top";
 import Aadhar from "./Servicepages/Aadhar";
-import HomeComponent from "./Homepage.jsx/HomeComponent";
+import HomeComponent from "./Homepage/HomeComponent";
 import Upi from "./Servicepages/Upi";
 
 
