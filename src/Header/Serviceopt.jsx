@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { VscThreeBars } from "react-icons/vsc";
 import SearchBar from "../SearchBar/SearchBar";
 
-const SinglePage = () => {
+const Serviceopt = () => {
   const location = useLocation();
 
   const [activeService, setActiveService] = useState(null);
@@ -193,4 +193,4 @@ const SinglePage = () => {
   );
 };
 
-export default SinglePage;
+export default Serviceopt;
