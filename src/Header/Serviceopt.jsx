@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { VscThreeBars } from "react-icons/vsc";
-import SearchBar from "../SearchBar/SearchBar";
+
 
 const Serviceopt = () => {
   const location = useLocation();
@@ -108,6 +108,7 @@ const Serviceopt = () => {
     { id: "careers", title: "Careers", link: "/careers" },
     { id: "terms", title: "Terms of Service", link: "/terms" },
     { id: "privacy", title: "Privacy Policy", link: "/privacy" },
+    { id: "service", title: "service", link: "/service" },
   ];
 
   // 🔹 URL change hone par dropdown band

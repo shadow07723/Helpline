@@ -92,7 +92,7 @@ const Footer = () => {
                 Privacy Policy
               </Link>
             </li>
-            <li className="hover:text-white cursor-pointer">Disclaimer</li>
+
             <li>
               <Link
                 to="/contact"
@@ -119,12 +119,37 @@ const Footer = () => {
           </a>
 
           <div className="flex gap-4 text-xl">
-           <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
-            <FaYoutube className="hover:text-red-500 cursor-pointer" />
-           </a>
-            <FaFacebook className="hover:text-blue-500 cursor-pointer" />
-            <FaInstagram className="hover:text-pink-500 cursor-pointer" />
-            <FaWhatsapp className="hover:text-green-500 cursor-pointer" />
+            <a
+              href="https://www.youtube.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaYoutube className="hover:text-red-500 cursor-pointer" />
+            </a>
+
+            <a
+              href="https://www.facebook.com/share/p/16kSe2ybqA/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebook className="hover:text-blue-500 cursor-pointer" />
+            </a>
+
+            <a
+              href="https://www.instagram.com/sagar_roy_012?igsh=cmtqa241aDQ5NzJ6"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram className="hover:text-pink-500 cursor-pointer" />
+            </a>
+
+            <a
+              href="https://chat.whatsapp.com/Dt1azNtV7Ih0JR474UaflA"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaWhatsapp className="hover:text-green-500 cursor-pointer" />
+            </a>
           </div>
         </div>
       </div>
