@@ -1,8 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { IoSearch } from "react-icons/io5";
 import SearchBar from "../SearchBar/SearchBar";
+
+// ✅ ADD
+import { LanguageContext } from "../LanguageContext.jsx";
 
 function Header({ activeSearchBar, setActiveSearchBar }) {
   const navigate = useNavigate();
@@ -11,45 +14,17 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
   const [fullSearch, setFullSearch] = useState(false);
   const searchWrapperRef = useRef(null);
 
-  // 🔹 LANGUAGE STATE
-  const [showLangDropdown, setShowLangDropdown] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem("lang") || "en",
-  );
+  // ✅ SAFE CONTEXT
+  const context = useContext(LanguageContext);
+  const { lang, setLang, t } = context;
 
-  const languages = [
-    { code: "en", name: "English" },
-    { code: "hi", name: "हिंदी" },
-    { code: "bn", name: "বাংলা" },
-  ];
-  const langRef = useRef(null);
-
-  // 🔹 TEXTS FOR MULTI-LANGUAGE
-  const langTexts = {
-    en: {
-      search: "Search",
-      signIn: "Sign In",
-      searchPlaceholder: "Search...",
-    },
-    hi: {
-      search: "खोजें",
-      signIn: "साइन इन",
-      searchPlaceholder: " खोजें...",
-    },
-    bn: {
-      search: "খুঁজুন",
-      signIn: "সাইন ইন",
-      searchPlaceholder: " খুঁজুন...",
-    },
-  };
-
-  // ✅ PAGE CHANGE HOTE HI HEADER NORMAL
+  // PAGE CHANGE HOTE HI HEADER NORMAL
   useEffect(() => {
     setFullSearch(false);
     setActiveSearchBar(null);
   }, [location.pathname]);
 
-  // ✅ CLICK OUTSIDE TO CLOSE SEARCH OR LANGUAGE DROPDOWN
+  // CLICK OUTSIDE TO CLOSE
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -60,109 +35,71 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
         setFullSearch(false);
         setActiveSearchBar(null);
       }
-
-      if (langRef.current && !langRef.current.contains(event.target)) {
-        setShowLangDropdown(false);
-      }
     };
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [fullSearch]);
-
-  // 🔹 LANGUAGE SELECT FUNCTION
-  const handleLanguageSelect = (langCode) => {
-    setSelectedLanguage(langCode);
-    localStorage.setItem("lang", langCode);
-    setShowLangDropdown(false);
-  };
+  }, [fullSearch, setActiveSearchBar]);
 
   return (
-    <div className="w-full bg-blue-600 p-4">
-      {/* 🔍 FULL WIDTH SEARCH MODE */}
+    <div className="w-full bg-gray-500 p-4">
+      {/* FULL SEARCH */}
       {fullSearch ? (
-        <div
-          ref={searchWrapperRef}
-          className="flex items-center gap-3 w-full relative"
-        >
+        <div ref={searchWrapperRef} className="flex items-center gap-3 w-full">
           <SearchBar
             id="header"
             wrapperClass="w-full"
-            inputClass="h-12 rounded-md bg-white text-left px-4"
+            inputClass="h-12 rounded-md bg-white px-4"
             dropdownClass="absolute top-14 left-0 right-0 bg-white border rounded-md z-50"
             itemClass="p-3 hover:bg-gray-100 cursor-pointer"
-            placeholder={langTexts[selectedLanguage]?.searchPlaceholder}
+            placeholder={t.placeholder}
             activeSearchBar={activeSearchBar}
             setActiveSearchBar={setActiveSearchBar}
           />
 
-          {/* ❌ CLOSE */}
           <button
             onClick={() => {
               setFullSearch(false);
               setActiveSearchBar(null);
             }}
-            className="text-white text-2xl font-bold px-3"
+            className="text-white text-2xl px-3"
           >
-            <AiOutlineCloseCircle className="scale-150" />
+            <AiOutlineCloseCircle />
           </button>
         </div>
       ) : (
-        /* 🧭 NORMAL HEADER */
-        <div className="flex justify-between items-center">
+        /* NORMAL HEADER */
+        <div className="flex justify-between items-center gap-3">
           {/* LOGO */}
           <img
-            src="/Colorful_Modern_Infinity_.png"
+            src="/Tricolor_Ab_Ashok_Chakra_.png"
             alt="logo"
-            className="cursor-pointer h-12 w-19"
-            onClick={() =>
-              navigate("/", {
-                state: { service: null },
-              })
-            }
+            className="h-10 w-10 cursor-pointer"
+            onClick={() => navigate("/")}
           />
+          {/* 🌐 LANGUAGE DROPDOWN */}
+          <select
+            value={lang}
+            onChange={(e) => setLang(e.target.value)}
+            className="px-2 py-1 rounded"
+          >
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+          </select>
 
-          {/* 🔹 LANGUAGE DROPDOWN */}
-          <div className="relative" ref={langRef}>
-            <button
-              onClick={() => setShowLangDropdown(!showLangDropdown)}
-              className="text-white font-semibold px-3 py-2 rounded hover:bg-blue-500"
-            >
-              {languages.find((l) => l.code === selectedLanguage)?.name} ▼
-            </button>
-            {showLangDropdown && (
-              <div className="absolute right-0 mt-2 w-24 bg-white rounded shadow-md z-50">
-                {languages.map((lang) => (
-                  <div
-                    key={lang.code}
-                    onClick={() => handleLanguageSelect(lang.code)}
-                    className="p-2 hover:bg-gray-100 cursor-pointer text-black"
-                  >
-                    {lang.name}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* SEARCH BUTTON */}
+          {/* SEARCH */}
           <button
             onClick={() => setFullSearch(true)}
-            className=" py-2 bg-transparent text-blue-500 bg-white rounded-full font-medium hover:bg-gray-100 flex items-center justify-between w-30 md:w-60 px-4"
+            className="py-2 bg-white text-blue-500 rounded-full flex items-center gap-2 px-4"
           >
-            <span className="md:hidden"></span>
-            <p className="block md:block">
-              {langTexts[selectedLanguage]?.search}
-            </p>
-            <IoSearch className="scale-150" />
+            <span className="hidden md:block">{t.search}</span>
+            <IoSearch />
           </button>
 
           {/* SIGN IN */}
-          <button className="text-white">
-            {langTexts[selectedLanguage]?.signIn}
-          </button>
+          <button className="text-white">{t.signIn}</button>
         </div>
       )}
     </div>

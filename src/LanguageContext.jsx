@@ -1,26 +1,22 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
+import languages from "./languages";
 
-// 1️⃣ Create context
-const LanguageContext = createContext();
+export const LanguageContext = createContext();
 
-// 2️⃣ Provider component
-export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState(
-    localStorage.getItem("lang") || "en",
-  );
-
-  useEffect(() => {
-    localStorage.setItem("lang", language);
-  }, [language]);
-
-  const changeLanguage = (lang) => setLanguage(lang);
+const LanguageProvider = ({ children }) => {
+  const [lang, setLang] = useState("en");
 
   return (
-    <LanguageContext.Provider value={{ language, changeLanguage }}>
+    <LanguageContext.Provider
+      value={{
+        lang,
+        setLang,
+        t: languages[lang],
+      }}
+    >
       {children}
     </LanguageContext.Provider>
   );
 };
 
-// 3️⃣ Custom hook
-export const useLanguage = () => useContext(LanguageContext);
+export default LanguageProvider;
