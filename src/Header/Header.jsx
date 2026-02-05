@@ -37,7 +37,7 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
       searchPlaceholder: " खोजें...",
     },
     bn: {
-      search: "অনুসন্ধান করুন",
+      search: "খুঁজুন",
       signIn: "সাইন ইন",
       searchPlaceholder: " খুঁজুন...",
     },
