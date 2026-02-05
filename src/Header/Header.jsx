@@ -14,20 +14,33 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
   // 🔹 LANGUAGE STATE
   const [showLangDropdown, setShowLangDropdown] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(
-    localStorage.getItem("lang") || "EN",
+    localStorage.getItem("lang") || "en",
   );
+
   const languages = [
-    { code: "en", name: "EN" },
-    { code: "hi", name: "HI" },
-    { code: "bn", name: "BN" },
+    { code: "en", name: "English" },
+    { code: "hi", name: "हिंदी" },
+    { code: "bn", name: "বাংলা" },
   ];
   const langRef = useRef(null);
 
   // 🔹 TEXTS FOR MULTI-LANGUAGE
   const langTexts = {
-    en: { search: "Search", signIn: "Sign In", langName: "English" },
-    hi: { search: "खोजें", signIn: "साइन इन", langName: "हिन्दी" },
-    bn: { search: "অনুসন্ধান করুন", signIn: "সাইন ইন", langName: "বাংলা" },
+    en: {
+      search: "Search",
+      signIn: "Sign In",
+      searchPlaceholder: "Search services...",
+    },
+    hi: {
+      search: "खोजें",
+      signIn: "साइन इन",
+      searchPlaceholder: "सेवाओं को खोजें...",
+    },
+    bn: {
+      search: "অনুসন্ধান করুন",
+      signIn: "সাইন ইন",
+      searchPlaceholder: "সার্ভিস খুঁজুন...",
+    },
   };
 
   // ✅ PAGE CHANGE HOTE HI HEADER NORMAL
@@ -60,11 +73,10 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
   }, [fullSearch]);
 
   // 🔹 LANGUAGE SELECT FUNCTION
-  const handleLanguageSelect = (lang) => {
-    setSelectedLanguage(lang.name);
-    localStorage.setItem("lang", lang.code);
+  const handleLanguageSelect = (langCode) => {
+    setSelectedLanguage(langCode);
+    localStorage.setItem("lang", langCode);
     setShowLangDropdown(false);
-    window.location.reload(); // page refresh to apply language
   };
 
   return (
@@ -81,11 +93,7 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
             inputClass="h-12 rounded-md bg-white text-left px-4"
             dropdownClass="absolute top-14 left-0 right-0 bg-white border rounded-md z-50"
             itemClass="p-3 hover:bg-gray-100 cursor-pointer"
-            placeholder={
-              selectedLanguage
-                ? langTexts[selectedLanguage.toLowerCase()]?.search
-                : "Search services..."
-            }
+            placeholder={langTexts[selectedLanguage]?.searchPlaceholder}
             activeSearchBar={activeSearchBar}
             setActiveSearchBar={setActiveSearchBar}
           />
@@ -122,18 +130,17 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
               onClick={() => setShowLangDropdown(!showLangDropdown)}
               className="text-white font-semibold px-3 py-2 rounded hover:bg-blue-500"
             >
-              {langTexts[selectedLanguage.toLowerCase()]?.langName} ▼
+              {languages.find((l) => l.code === selectedLanguage)?.name} ▼
             </button>
             {showLangDropdown && (
-              <div className="absolute right-0 mt-2 w-28 bg-white rounded shadow-md z-50">
+              <div className="absolute right-0 mt-2 w-24 bg-white rounded shadow-md z-50">
                 {languages.map((lang) => (
                   <div
                     key={lang.code}
-                    onClick={() => handleLanguageSelect(lang)}
+                    onClick={() => handleLanguageSelect(lang.code)}
                     className="p-2 hover:bg-gray-100 cursor-pointer text-black"
                   >
-                    {langTexts[lang.code].langName}{" "}
-                    {/* Text in that language */}
+                    {lang.name}
                   </div>
                 ))}
               </div>
@@ -147,14 +154,14 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
           >
             <span className="md:hidden"></span>
             <p className="hidden md:block">
-              {langTexts[selectedLanguage.toLowerCase()]?.search}
+              {langTexts[selectedLanguage]?.search}
             </p>
             <IoSearch className="scale-150" />
           </button>
 
           {/* SIGN IN */}
           <button className="text-white">
-            {langTexts[selectedLanguage.toLowerCase()]?.signIn}
+            {langTexts[selectedLanguage]?.signIn}
           </button>
         </div>
       )}
