@@ -29,17 +29,17 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
     en: {
       search: "Search",
       signIn: "Sign In",
-      searchPlaceholder: "Search services...",
+      searchPlaceholder: "Search...",
     },
     hi: {
       search: "खोजें",
       signIn: "साइन इन",
-      searchPlaceholder: "सेवाओं को खोजें...",
+      searchPlaceholder: " खोजें...",
     },
     bn: {
       search: "অনুসন্ধান করুন",
       signIn: "সাইন ইন",
-      searchPlaceholder: "সার্ভিস খুঁজুন...",
+      searchPlaceholder: " খুঁজুন...",
     },
   };
 
@@ -153,7 +153,7 @@ function Header({ activeSearchBar, setActiveSearchBar }) {
             className=" py-2 bg-transparent text-blue-500 bg-white rounded-full font-medium hover:bg-gray-100 flex items-center justify-between w-30 md:w-60 px-4"
           >
             <span className="md:hidden"></span>
-            <p className="hidden md:block">
+            <p className="block md:block">
               {langTexts[selectedLanguage]?.search}
             </p>
             <IoSearch className="scale-150" />
