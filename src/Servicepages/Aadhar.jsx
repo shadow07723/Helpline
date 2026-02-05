@@ -5,7 +5,7 @@ import { FaFacebook } from "react-icons/fa";
 import { GrLinkedin } from "react-icons/gr";
 import { FaInstagram } from "react-icons/fa6";
 import { GrServices } from "react-icons/gr";
-import Footer from "../Footer.jsx";
+import Footer from "../Header/Footer.jsx";
 import { Link } from "react-router";
 
 const Card = ({ icon: Icon, title }) => (
